@@ -65,14 +65,8 @@
     <?php 
         include "/views/public/js.html"
     ?>
-    <!--头像请求-->
-   <script>
-       var userInfo = JSON.parse($.cookie("userinfo"));
-       var tplStr = template("tpl",userInfo);
-       $("#userinfo").html(tplStr);
-
-   </script>
-    <script>
+    
+    <!--<script>
 
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
@@ -100,6 +94,6 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 
-    </script>
+    </script>-->
 </body>
 </html>
