@@ -8,9 +8,14 @@
 	// });
 	define(["jquery","template","cookie"],function($,template){
 		if("/dashboard/login"!=location.pathname){
-			var userInfo = JSON.parse($.cookie("userinfo"));
-			var tplStr = template("tpl",userInfo);
-			$("#userinfo").html(tplStr);
+			if(!$.cookie("PHPSESSID")){
+				location.href="/dashboard/login";
+			}else{
+				var userInfo = JSON.parse($.cookie("userinfo"));
+				var tplStr = template("tpl",userInfo);
+				$("#userinfo").html(tplStr);
+			}
+			
 		}
 		$("#logout").on("click",function(){
 			$.ajax({
@@ -22,6 +27,12 @@
 					}
 				}
 			})
+		})
+
+		// 课程管理二级菜单点击事件
+		$(".navs>ul>li>ul").parent().click(function(){
+			var  $ul = $(this).children("ul");
+			$ul.slideToggle();
 		})
 		
 	})
