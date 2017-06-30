@@ -12,6 +12,17 @@
 			var tplStr = template("tpl",userInfo);
 			$("#userinfo").html(tplStr);
 		}
+		$("#logout").on("click",function(){
+			$.ajax({
+				url:"/api/logout",
+				type:"post",
+				success:function(data){
+					if(data.code==200){
+						location.href="/dashboard/login";
+					}
+				}
+			})
+		})
 		
 	})
 	
