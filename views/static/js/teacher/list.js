@@ -1,4 +1,4 @@
-define(["jquery","template","bootstrap"],function($,template){
+define(["jquery","template","nprogress", "bootstrap"],function($,template,NProgress){
     // 列表请求
     $.ajax({
         url:"/api/teacher",
@@ -18,12 +18,38 @@ define(["jquery","template","bootstrap"],function($,template){
                tc_id:id,
            },
            success:function(data){
-               console.log(data)
                var tplstr2 = template("tpl2",data.result);
                $("#teacherModal").html(tplstr2);
                $("#teacherModal").modal("show");
            }
        })
+    })
+
+    // 给注销启用按钮注册点击事件
+    $("#tbody").on("click",".btn-onoff",function(){
+        var id = $(this).parent().data("id");
+        var status = $(this).data("status");
+        var $that = $(this);
+        $.ajax({
+            url:"/api/teacher/handle",
+            type:"post",
+            data:{
+                tc_id:id,
+                tc_status:status,
+            },
+            success:function(data){
+                $that.data("status", data.result.tc_status);
+				if(data.result.tc_status == 1){
+						$that.removeClass("btn-warning");
+						$that.addClass("btn-success");
+						$that.text("启 用");
+					}else{
+						$that.removeClass("btn-success");
+						$that.addClass("btn-warning");
+						$that.text("注 销");
+					}
+            }
+        })
     })
 
 })

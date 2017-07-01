@@ -6,7 +6,22 @@
 	// $('.navs ul').prev('a').on('click', function () {
 	// 	$(this).next().slideToggle();
 	// });
-	define(["jquery","template","cookie"],function($,template){
+	define(["jquery","template","nprogress","cookie"],function($,template,NProgress){
+
+		NProgress.start();
+		NProgress.done();
+
+		$(document).ajaxStart(function(){
+			NProgress.start();
+		})
+
+		$(document).ajaxStop(function(){
+			NProgress.done();
+		})
+
+
+
+
 		$(function(){
 			if("/dashboard/login"!=location.pathname){
 				if(!$.cookie("PHPSESSID")){
