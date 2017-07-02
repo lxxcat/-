@@ -1,4 +1,4 @@
-define(["jquery", "template", "util", "form","datepicker","datepicker-zh"],function($, template, util){
+define(["jquery", "template", "util", "form","datepicker","datepicker-zh","validate"],function($, template, util){
     // 在id的作用下讲师编辑
     var query = util.getQueryObj();
     if(query.id){
@@ -17,8 +17,54 @@ define(["jquery", "template", "util", "form","datepicker","datepicker-zh"],funct
 				$(".teacher").html(html);
                 $("#aaa").datepicker({
                 format:"yyyy-mm-dd",
-                //  language:""
-        })
+                 language:"zh-CN"
+                });
+                
+                // 编辑讲师
+                $("#teacherform").validate({
+                    description:{
+                        "tcname":{
+                            required:"请输入用户名",
+                        },
+                        "tcpass":{
+                            required:"请输入密码",
+                        },
+                        "tcjoindate":{
+                            required:"请输入入职时间"
+                        }
+                    },
+                    onBlur: true,
+			        onKeyup: true,
+                    sendForm:false,
+                    eachInvalidField:function(){
+                        console.log(111);
+                        this.parent().parent().addClass("has-error").removeClass("has-success");
+                        this.parent().next().removeClass("hide");
+                    },
+                    eachValidField:function(){
+                        console.log(222);
+                        this.parent().parent().addClass("has-success").removeClass("has-error");
+                    },
+                    valid:function(){
+                        console.log('valid被触发了,验证通过')
+                        var type = $("#btnSave").data("type");
+                        var url = "";
+                        if(type=="edit"){
+                            url="/api/teacher/update";
+                        }else{
+                            url = "/api/teacher/add";
+                        }
+                        $("#teacherform").ajaxSubmit({
+                            url:url,
+                            type:"post",
+                            success:function(data){
+                                if(data.code==200){
+                                    location.href="/teacher/list";
+                                }
+                            }
+                         });
+                    }
+                })
             }
         })
         // 讲师添加
@@ -29,25 +75,56 @@ define(["jquery", "template", "util", "form","datepicker","datepicker-zh"],funct
             type:"add"
         })
         $(".teacher").html(html);
+        $("#aaa").datepicker({
+                format:"yyyy-mm-dd",
+                 language:"zh-CN"
+                });
+
+                // 添加讲师
+                $("#teacherform").validate({
+                    description:{
+                        "tcname":{
+                            required:"请输入用户名",
+                        },
+                        "tcpass":{
+                            required:"请输入密码",
+                        },
+                        "tcjoindate":{
+                            required:"请输入入职时间"
+                        }
+                    },
+                    onBlur: true,
+			        onKeyup: true,
+                    sendForm:false,
+                    eachInvalidField:function(){
+                        console.log(111);
+                        this.parent().parent().addClass("has-error").removeClass("has-success");
+                        this.parent().next().removeClass("hide");
+                    },
+                    eachValidField:function(){
+                        console.log(222);
+                        this.parent().parent().addClass("has-success").removeClass("has-error");
+                    },
+                    valid:function(){
+                        console.log('valid被触发了,验证通过')
+                        var type = $("#btnSave").data("type");
+                        var url = "";
+                        if(type=="edit"){
+                            url="/api/teacher/update";
+                        }else{
+                            url = "/api/teacher/add";
+                        }
+                        $("#teacherform").ajaxSubmit({
+                            url:url,
+                            type:"post",
+                            success:function(data){
+                                if(data.code==200){
+                                    location.href="/teacher/list";
+                                }
+                            }
+                         });
+                    }
+                })
     }
-    $(".teacher").on("click","#btnSave",function(){
-        var type = $(this).data("type");
-        var url = "";
-        if(type=="edit"){
-            url="/api/teacher/update";
-        }else{
-            url = "/api/teacher/add";
-        }
-        $("#teacherform").ajaxSubmit({
-            url:url,
-            type:"post",
-            success:function(data){
-                if(data.code==200){
-                    location.href="/teacher/list";
-                }
-            }
-        });
-        return false;
-    })
 
 });
