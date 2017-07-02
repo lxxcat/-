@@ -1,4 +1,4 @@
-define(["jquery", "template", "util", "form"],function($, template, util){
+define(["jquery", "template", "util", "form","datepicker","datepicker-zh"],function($, template, util){
     // 在id的作用下讲师编辑
     var query = util.getQueryObj();
     if(query.id){
@@ -15,6 +15,10 @@ define(["jquery", "template", "util", "form"],function($, template, util){
                 data.result.type = "edit";
                 var html = template("teacher-tpl", data.result);
 				$(".teacher").html(html);
+                $("#aaa").datepicker({
+                format:"yyyy-mm-dd",
+                //  language:""
+        })
             }
         })
         // 讲师添加
