@@ -1,4 +1,4 @@
-define(["jquery","ckeditor", "datepicker", "datepicker-zh", "region"],function($,CKEDITOR){
+define(["jquery","ckeditor", "datepicker", "datepicker-zh", "region","validate"],function($,CKEDITOR){
     // 出生日期
     $("#a").datepicker({
         format:"yyyy-mm-dd",
