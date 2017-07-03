@@ -1,4 +1,4 @@
-define(["jquery","ckeditor", "datepicker", "datepicker-zh", "region","validate"],function($,CKEDITOR){
+define(["jquery","ckeditor", "datepicker", "datepicker-zh", "region","validate","template","uploadify","form"],function($,CKEDITOR,template){
     // 出生日期
     $("#a").datepicker({
         format:"yyyy-mm-dd",
@@ -22,5 +22,9 @@ define(["jquery","ckeditor", "datepicker", "datepicker-zh", "region","validate"]
 	});
     $("#region").region({
         url:"/views/assets/jquery-region/region.json"
-    })
+    });
+    // 头像
+   $("#upfile").uploadify({
+
+   });
 })
